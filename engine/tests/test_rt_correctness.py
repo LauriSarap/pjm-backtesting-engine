@@ -1,6 +1,6 @@
 """Correctness tests — RT energy + dual settlement.
 
-Same shape as test_correctness.py: hand-computed formulas, bitemporal probes,
+Same shape as test_correctness.py: hand-computed formulas, as-of probes,
 money sanity. If any of these fail, dual-settlement is broken.
 """
 
@@ -69,7 +69,7 @@ def test_settle_rt_award_dispatches_correctly(rt_lmps):
     assert row.product == "RT_Energy"
 
 
-# ─── bitemporal probe at the RT gate ─────────────────────────────────────────
+# ─── as-of probe at the RT gate ─────────────────────────────────────────
 
 
 def test_view_at_rt_gate_excludes_target_mtu(rt_lmps):

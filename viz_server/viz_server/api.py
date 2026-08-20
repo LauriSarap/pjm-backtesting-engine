@@ -1,7 +1,7 @@
 """FastAPI app for the viz_server.
 
 Boots a 127.0.0.1-only HTTP server that pre-loads every registered feed at
-startup, wraps each in a CachedView, and serves bitemporal slices over Arrow
+startup, wraps each in a CachedView, and serves as-of slices over Arrow
 IPC.
 
 Endpoints:
@@ -251,7 +251,7 @@ async def api_series(
 # --- Strategy run endpoints ------------------------------------------------
 #
 # /api/strategy_runs   -> discovery: which (run, strategy, asset) tuples exist
-# /api/strategy_series -> bitemporally-filtered cleared MW + cum revenue,
+# /api/strategy_series -> as-of-filtered cleared MW + cum revenue,
 #                          with optional PF ceiling overlay
 #
 # These read parquet files emitted by pjm_engine.runner. Loader lives in
@@ -326,7 +326,7 @@ def api_strategy_series(
         True, description="include perfect_foresight ceiling line if available"
     ),
 ) -> dict:
-    """Bitemporally-filtered cleared MW + cumulative revenue for a strategy.
+    """As-of-filtered cleared MW + cumulative revenue for a strategy.
 
     PF ceiling is included by default if a perfect_foresight run exists with
     the same (run, asset). Always returned unfiltered (it's the oracle).

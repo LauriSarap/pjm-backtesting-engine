@@ -1,4 +1,4 @@
-"""Bitemporal leakage probes across every feed and every gate type.
+"""Leakage probes across every feed and every gate type.
 
 This expands `test_data.py` (DA LMP only) to all 5 feeds the engine loads
 (`da_hrl_lmps`, `rt_fivemin_mnt_lmps`, `reg_prices`, `da_sr_prices`,
@@ -326,7 +326,7 @@ def test_rt_gate_blind_window_same_for_reg_prices(reg_prices):
     assert latest_visible == expected_latest
 
 
-# ── 7. DataView accessor honors the bitemporal filter ────────────────────────
+# ── 7. DataView accessor honors the as-of filter ────────────────────────
 
 
 def test_dataview_da_lmp_returns_none_for_unpublished_hour(da_lmps):
@@ -355,7 +355,7 @@ def test_runner_ctx_view_is_event_pinned_dataview(da_lmps):
     was silently ignored — strategies that wrote `ctx.view(t)` got back the
     gate's view regardless of `t`, a contract drift. The new shape removes
     the callable wrapper entirely; strategies say `ctx.view` and the
-    bitemporal guarantee is enforced at construction time."""
+    no-lookahead guarantee is enforced at construction time."""
     from pjm_engine.battery import ASSETS
     from pjm_engine.strategy_base import Commitments, Context
 

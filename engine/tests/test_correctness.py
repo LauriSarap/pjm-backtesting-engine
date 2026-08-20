@@ -191,7 +191,7 @@ def test_validator_accepts_legal_bid():
     validate_stack([SelfSchedule(Product.DA_Energy, _ts(8), -100.0)], c)
 
 
-# ─── Tier 1 #4 — bitemporal at the actual gate ───────────────────────────────
+# ─── Tier 1 #4 — as-of filtering at the actual gate ───────────────────────────────
 
 
 def test_view_at_da_gate_excludes_operating_day(da_lmps):

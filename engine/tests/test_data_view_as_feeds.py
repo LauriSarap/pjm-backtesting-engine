@@ -1,11 +1,11 @@
-"""DataView AS-feed accessors — bitemporal correctness + missing-data handling.
+"""DataView AS-feed accessors — as-of correctness + missing-data handling.
 
 Locks in the AS-feed accessors: `da_sr_prices`, `rt_sr_prices`,
 `da_sec_prices`, `rt_sec_prices`, and `reg_market_results` are loaded by the
 runner for clearing AND exposed to strategies. This test file pins:
 
 1. each accessor returns a DataFrame with the expected columns,
-2. the bitemporal `published_at <= as_of` filter applies (synthetic fixture,
+2. the `published_at <= as_of` filter applies (synthetic fixture,
    no dependency on real data),
 3. when a feed's underlying parquet is absent the accessor returns an empty
    schema-shaped frame and emits a warning (does NOT raise).
@@ -46,7 +46,7 @@ def _make_as_price_frame(starts: list[datetime], pub_offset_min: int) -> pd.Data
 
     `published_at = mtu_start + pub_offset_min` keeps `published_at`
     monotonic since `starts` is monotonic — which is the precondition the
-    `searchsorted` slice in `_bitemporal_slice` relies on.
+    `searchsorted` slice in `_as_of_slice` relies on.
     """
     pubs = [s + timedelta(minutes=pub_offset_min) for s in starts]
     return pd.DataFrame(
@@ -67,7 +67,7 @@ def _make_reg_market_results_frame(starts: list[datetime]) -> pd.DataFrame:
 
     Per M11 §3.7.5 the engine fallback stamps `published_at = block_start − 10
     min`. We reuse that here so the synthetic frame matches the real loader
-    convention, which keeps the bitemporal-filter test below honest.
+    convention, which keeps the as-of-filter test below honest.
     """
     pubs = [s - timedelta(minutes=10) for s in starts]
     n = len(starts)
@@ -194,10 +194,10 @@ def test_reg_market_results_returns_expected_columns(synthetic_reg_market_result
     assert len(out) == 6
 
 
-# ─── Bitemporal filter (the load-bearing guarantee) ───────────────────────────
+# ─── As-of filter (the load-bearing guarantee) ───────────────────────────
 
 
-def test_bitemporal_filter_excludes_future_published_rows(synthetic_rt_sr):
+def test_as_of_filter_excludes_future_published_rows(synthetic_rt_sr):
     """Pin `as_of` between two MTU publish boundaries; rows published *after*
     `as_of` must not appear in the accessor's output. This is the same
     `published_at <= as_of` contract `view_as_of` enforces for da_lmps.
@@ -221,7 +221,7 @@ def test_bitemporal_filter_excludes_future_published_rows(synthetic_rt_sr):
     ]
 
 
-def test_bitemporal_filter_at_as_of_before_any_publish_returns_empty(synthetic_rt_sr):
+def test_as_of_filter_at_as_of_before_any_publish_returns_empty(synthetic_rt_sr):
     """An `as_of` strictly before the first `published_at` returns 0 rows."""
     as_of = _ts(2025, 11, 3, 4, 0)  # well before first publish at 05:10
     view = _view(as_of, _rt_sr_prices=synthetic_rt_sr)
@@ -229,7 +229,7 @@ def test_bitemporal_filter_at_as_of_before_any_publish_returns_empty(synthetic_r
     assert len(out) == 0
 
 
-def test_bitemporal_filter_applies_to_reg_market_results(synthetic_reg_market_results):
+def test_as_of_filter_applies_to_reg_market_results(synthetic_reg_market_results):
     """Same contract for the half-hour reg_market_results feed."""
     # published_at = start − 10 min (M11 §3.7.5). First row start 05:00 →
     # publish 04:50. Second row start 05:30 → publish 05:20. Pin as_of = 05:00

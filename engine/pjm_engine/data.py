@@ -1,4 +1,4 @@
-"""Bitemporal data layer.
+"""Data layer.
 
 Loads PJM CSVs, stamps each row with a computed `published_at`, caches to
 parquet. The only path the strategy has to read history is via
@@ -425,7 +425,7 @@ def load_rto_forecasts(refresh: bool = False) -> pd.DataFrame:
 
     The forecast generator lives with the viz feed loaders because the first
     consumer was the visualizer. The engine reads the materialized cache here
-    so strategies can use the same bitemporal ``published_at`` contract as
+    so strategies can use the same ``published_at`` contract as
     PJM price feeds without importing viz-server code.
     """
     cache_path = CACHE / "viz_synthetic_rto_forecasts.parquet"
@@ -527,7 +527,7 @@ def load_sr_events(refresh: bool = False) -> pd.DataFrame:
 
     # Sort by `published_at` so `view_as_of`'s searchsorted contract holds for
     # this feed too — currently no caller threads it through `view_as_of`, but
-    # the invariant must be intact for any future bitemporal use.
+    # the invariant must be intact for any future as-of use.
     grouped = grouped.sort_values(["published_at", "event_start_utc"]).reset_index(drop=True)
 
     CACHE.mkdir(parents=True, exist_ok=True)
@@ -616,7 +616,7 @@ def view_as_of(df: pd.DataFrame, as_of: datetime) -> pd.DataFrame:
 class CachedView:
     """Memoize `view_as_of` by cutoff index.
 
-    The bitemporal filter is event-driven: between consecutive events, the
+    The as-of filter is event-driven: between consecutive events, the
     DA cutoff often doesn't move (DA data publishes once at the daily gate),
     and the RT cutoff stays put for the 15-min publication lag. The naïve
     runner rebuilt the slice on every event — 17k slices over a 30-day window.

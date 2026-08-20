@@ -348,7 +348,7 @@ def _forecast_revisions(
 
 
 def load_synthetic_rto_forecasts(refresh: bool = False) -> pd.DataFrame:
-    """Synthetic bitemporal RTO load/renewable forecasts from historical actuals.
+    """Synthetic RTO load/renewable forecasts from historical actuals.
 
     The frame has one row per forecast revision. `published_at` is when that
     revision would have been knowable; `datetime_beginning_utc` is the target

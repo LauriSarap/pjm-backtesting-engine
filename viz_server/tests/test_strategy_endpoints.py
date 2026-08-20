@@ -153,7 +153,7 @@ def test_pf_ceiling_dominates_strategy():
     )
 
 
-def test_bitemporal_clamp_shrinks_visible_revenue():
+def test_decision_time_clamp_shrinks_visible_revenue():
     """At an early decision_time, fewer awards should be visible."""
     t_from, t_to, _ = _full_window()
 

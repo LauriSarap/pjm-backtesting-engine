@@ -2,7 +2,7 @@
 
 PJM operating-days run EPT 00:00 → next-EPT 00:00. On spring-forward day the
 window spans 23 hours; on fall-back day 25 hours; otherwise 24. The frontend
-builds these bounds via `eptDayWindow` (date-fns-tz), and the bitemporal
+builds these bounds via `eptDayWindow` (date-fns-tz), and the as-of
 slicer re-uses them as raw UTC `target_from` / `target_to`. We pin a few
 known DST-transition days here so any future timezone refactor breaks loudly.
 

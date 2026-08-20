@@ -1,7 +1,7 @@
 """Strategy run loader tests for the viz tool integration.
 
 Covers:
-- bitemporal clamp: event_ts_utc <= decision_time
+- decision-time clamp: event_ts_utc <= decision_time
 - empty window returns empty DataFrame (not exception)
 - PF ceiling loader rejects non-PF input
 - PF ceiling loader does NOT clamp on decision_time
@@ -75,7 +75,7 @@ def _three_revenue_rows():
     return df
 
 
-# ─── load_strategy_revenue: bitemporal clamp ─────────────────────────────
+# ─── load_strategy_revenue: decision-time clamp ─────────────────────────────
 
 
 def test_revenue_clamps_on_decision_time(tmp_path):

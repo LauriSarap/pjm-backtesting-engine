@@ -50,7 +50,7 @@ const FEED_FILL: Record<string, string> = {
 };
 
 // Optional per-feed dash pattern. Used to mark "ghost" lines that don't
-// represent the same bitemporal contract as the rest of the pane (e.g. the
+// represent the same decision-time contract as the rest of the pane (e.g. the
 // PF ceiling, which is solved with full foresight and ignores decision_time).
 const FEED_DASH: Record<string, number[]> = {
   strategy_pf_ceiling: [6, 4],
@@ -71,7 +71,7 @@ interface Props {
    *  "feed" is a date string and FEED_COLOR has no entry. */
   colorOverride?: Record<string, string>;
   /** Optional fixed x-domain, in Unix seconds. Keeps partially-visible
-   *  bitemporal feeds on the full selected operating-day axis. */
+   *  partially-loaded feeds on the full selected operating-day axis. */
   xDomain?: { min: number; max: number };
   /** Per-feed scale assignment. When any feed maps to "y2" a secondary
    *  right-side y-axis is rendered. Lets a chart mix unrelated units

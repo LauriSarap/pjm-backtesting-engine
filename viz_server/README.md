@@ -1,9 +1,9 @@
 # viz_server
 
-Bitemporal market-replay API for the React client in `viz_client/`. It is a
+Market-replay API for the React client in `viz_client/`. It is a
 read-only consumer of `pjm_engine`. At startup it preloads every registered
 feed (DA/RT LMPs, AS prices, load, renewables, outages, synthetic
-forecasts) into in-memory `CachedView`s, then serves bitemporal slices,
+forecasts) into in-memory `CachedView`s, then serves as-of slices,
 that is, "what was knowable at decision time D about target window
 [from, to)", over Arrow IPC or JSON. It also serves backtest strategy runs (cleared MW,
 cumulative revenue, perfect-foresight ceiling) from parquet emitted by the
@@ -15,7 +15,7 @@ Binds to 127.0.0.1 only. No auth. Local research instrument.
 
 - `GET /api/feeds`: feed metadata
 - `GET /api/zones`: available zones
-- `GET /api/series`: bitemporal series slice (Arrow IPC, or `format=json`)
+- `GET /api/series`: as-of series slice (Arrow IPC, or `format=json`)
 - `GET /api/strategy_runs`: backtest run discovery
 - `GET /api/strategy_series`: cleared MW + cumulative revenue for one run
 - `GET /healthz`: readiness

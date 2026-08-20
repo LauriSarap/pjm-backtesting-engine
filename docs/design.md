@@ -120,7 +120,7 @@ Every response passes these checks, in order:
   of SR requires at least 0.5 * X MWh available).
 - **(d)** settlement-formula rules inside `markets/`: score thresholds,
   clawbacks.
-- **(e)** the bitemporal filter itself.
+- **(e)** the as-of filter itself.
 - **(f)** floor invariants after every event: revenue conservation,
   `cleared_MW <= bid_MW`, SoC in bounds, cycles monotonic.
 
@@ -280,7 +280,7 @@ aggregate-response offsets.
 
 ## Visualization
 
-`viz_server/` + `viz_client/` replay the bitemporal market view: a local
+`viz_server/` + `viz_client/` replay the market view at any decision time: a local
 FastAPI server serving only `view_as_of`-filtered series for a chosen
 decision time (the same oracle as the engine, property-tested against it),
 and a React UI with a scrubbable decision-time cursor. A two-cursor mode

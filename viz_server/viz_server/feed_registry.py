@@ -9,7 +9,7 @@ Each feed_id maps to:
   - layout/display metadata (pane, unit, display_name) used by the
     frontend FeedToggle.
 
-The registry is the *display* layer; bitemporal filtering is owned
+The registry is the *display* layer; as-of filtering is owned
 exclusively by `pjm_engine.data.view_as_of` / `CachedView`.
 """
 

@@ -234,7 +234,7 @@ export function PaneStack({ panes, series, syncKey = "panes", targetPin, onCurso
   }, [cursorTime, onCursorTime]);
 
   // When a target is pinned, the legend strip should show values AT THE PIN
-  // instead of at the cursor. This is the heart of the bitemporal demo:
+  // instead of at the cursor. This is the heart of the replay demo:
   // pin a target hour, then scrub decision_time and watch the per-feed
   // values revise (DA forecast → 1h forecast → actual). Without this, the
   // forecast revisions are visible only as line redraws, not numbers.

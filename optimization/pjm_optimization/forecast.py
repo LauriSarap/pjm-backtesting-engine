@@ -70,7 +70,7 @@ class Forecaster(ABC):
         """Return DA + RT LMP forecast for the horizon `[start_utc, start_utc + horizon)`.
 
         `as_of` is the strategy's information cutoff (typically the event
-        timestamp) — implementations that respect bitemporal causality must
+        timestamp) — implementations that are honest must
         not peek beyond it. The oracle deliberately does peek.
         """
 

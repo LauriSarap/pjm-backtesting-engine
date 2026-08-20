@@ -102,7 +102,7 @@ def _lazy_load_as_feed(name: str, schema: list[str]) -> pd.DataFrame:
     return df
 
 
-def _bitemporal_slice(df: pd.DataFrame, as_of: datetime) -> pd.DataFrame:
+def _as_of_slice(df: pd.DataFrame, as_of: datetime) -> pd.DataFrame:
     """Apply the same `published_at <= as_of` filter `view_as_of` applies.
 
     Defined inline (rather than imported from `data`) to keep `strategy_base`
@@ -340,7 +340,7 @@ class Context:
 
 @dataclass
 class DataView:
-    """Bitemporally-filtered handle over the engine's data tables.
+    """As-of-filtered handle over the engine's data tables.
 
     Adding new feeds = adding a new accessor here. Each accessor must be a
     pure read of the underlying frame filtered by `as_of` already.
@@ -394,7 +394,7 @@ class DataView:
     def rt_lmps_recent(self, zone: str, before_utc: datetime, last_n: int) -> pd.DataFrame:
         """Most recent `last_n` RT LMPs for `zone`, strictly before `before_utc`.
 
-        The bitemporal slice is already sorted by published_at, and for RT LMPs
+        The as-of slice is already sorted by published_at, and for RT LMPs
         published_at = datetime_beginning_utc + 10min is strictly monotonic, so
         the slice is also sorted by MTU start. We only need a zone filter + tail.
         """
@@ -446,9 +446,9 @@ class DataView:
         for operating day D, identical to DA energy gate timing.
         """
         if self._da_sr_prices is not None:
-            return _bitemporal_slice(self._da_sr_prices, self.as_of)
+            return _as_of_slice(self._da_sr_prices, self.as_of)
         df = _lazy_load_as_feed("load_da_sr_prices", _AS_PRICE_SCHEMA)
-        return _bitemporal_slice(df, self.as_of)
+        return _as_of_slice(df, self.as_of)
 
     def rt_sr_prices(self) -> pd.DataFrame:
         """RT 5-min Synchronized Reserve clearing prices (RTO).
@@ -459,9 +459,9 @@ class DataView:
         M11 §3.7.6).
         """
         if self._rt_sr_prices is not None:
-            return _bitemporal_slice(self._rt_sr_prices, self.as_of)
+            return _as_of_slice(self._rt_sr_prices, self.as_of)
         df = _lazy_load_as_feed("load_rt_sr_prices", _AS_PRICE_SCHEMA)
-        return _bitemporal_slice(df, self.as_of)
+        return _as_of_slice(df, self.as_of)
 
     def da_sec_prices(self) -> pd.DataFrame:
         """DA 30-Minute (Secondary) Reserve clearing prices (RTO sub-zone, hourly).
@@ -472,9 +472,9 @@ class DataView:
         explicitly observe the zero-clear regime.
         """
         if self._da_sec_prices is not None:
-            return _bitemporal_slice(self._da_sec_prices, self.as_of)
+            return _as_of_slice(self._da_sec_prices, self.as_of)
         df = _lazy_load_as_feed("load_da_sec_prices", _AS_PRICE_SCHEMA)
-        return _bitemporal_slice(df, self.as_of)
+        return _as_of_slice(df, self.as_of)
 
     def rt_sec_prices(self) -> pd.DataFrame:
         """RT 5-min 30-Minute (Secondary) Reserve clearing prices (RTO).
@@ -483,9 +483,9 @@ class DataView:
         (M11 §3.7.6).
         """
         if self._rt_sec_prices is not None:
-            return _bitemporal_slice(self._rt_sec_prices, self.as_of)
+            return _as_of_slice(self._rt_sec_prices, self.as_of)
         df = _lazy_load_as_feed("load_rt_sec_prices", _AS_PRICE_SCHEMA)
-        return _bitemporal_slice(df, self.as_of)
+        return _as_of_slice(df, self.as_of)
 
     def reg_market_results(self) -> pd.DataFrame:
         """System-wide Regulation procurement summary (half-hour post-redesign).
@@ -510,9 +510,9 @@ class DataView:
           interval). Pre-redesign hourly rows use the same fallback.
         """
         if self._reg_market_results is not None:
-            return _bitemporal_slice(self._reg_market_results, self.as_of)
+            return _as_of_slice(self._reg_market_results, self.as_of)
         df = _lazy_load_as_feed("load_reg_market_results", _REG_MARKET_RESULTS_SCHEMA)
-        return _bitemporal_slice(df, self.as_of)
+        return _as_of_slice(df, self.as_of)
 
 
 # ─── The base class ──────────────────────────────────────────────────────────

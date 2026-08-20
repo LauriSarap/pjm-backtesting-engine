@@ -3,7 +3,7 @@
 The PJM data feeds the engine consumes, fetched by the scripts in
 `scripts/` into `$PJM_DATA_ROOT` (default `./data`) under `raw/pjm/`. This
 file covers what each datum means and, just as importantly, when each datum
-first becomes knowable in real-time operations. The engine's bitemporal
+first becomes knowable in real-time operations. The engine's
 `published_at` rules are derived from this file, so if a timing claim here
 is wrong, the backtest is wrong.
 
@@ -180,7 +180,7 @@ earlier coverage is needed), and `reg_prices` starts 2026-04, so historical
 RMCCP/RMPCP are reconstructed from
 `reserve_market_results.reg_ccp`/`reg_pcp`.
 
-## 5. Publication timing (the bitemporal model)
+## 5. Publication timing
 
 Raw PJM CSVs carry no `published_at` column. The loader computes it from
 the row's settlement timestamp plus the feed's known publication delay
@@ -253,7 +253,7 @@ PJM bills weekly: a preliminary statement the Tuesday after the operating
 week and a verified statement 30-60 days later (the M28 §19.4
 reconciliation window, cadence per M29), with true-ups possible for months
 afterward.
-Score-dependent Regulation revenue is therefore bitemporally versioned
+Score-dependent Regulation revenue is therefore versioned by publication time
 (`weekly_preliminary` -> `weekly_verified` -> `adjustment`). The data layer
 tracks versions and serves the latest with `published_at <= now`.
 

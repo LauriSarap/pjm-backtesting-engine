@@ -105,7 +105,7 @@ export function Reference() {
         for replay but should not be confused with a real-time score.
       </p>
 
-      <H>Bitemporal slider semantics</H>
+      <H>Decision-time slider semantics</H>
       <ul className="list-disc list-inside text-[12px] space-y-1">
         <li>Slider scrubs <b>decision_time</b> within the displayed window.</li>
         <li>RT LMP visible when <C>MTU_start + 15 min ≤ decision_time</C> → 3-MTU blind window.</li>
@@ -162,7 +162,7 @@ export function Reference() {
         (M-21B); failure to submit data produces an <i>assumed forced outage</i>
         for the missing period. Why this matters for replay: the daily
         forecast publishes one row per region and was knowable at its{" "}
-        <C>forecast_execution_date_ept</C> — i.e. it's a bitemporal feed,
+        <C>forecast_execution_date_ept</C> — i.e. each row has its own publication time,
         and scrubbing decision-time will reveal earlier vs later forecast
         revisions for the same operating day.
       </p>

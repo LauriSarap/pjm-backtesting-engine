@@ -38,7 +38,7 @@ const DERIVED_FEEDS = new Set<string>([
 // Pane layout. Each pane shares the synced cursor; feeds within a pane
 // must share a y-axis scale (we group LMPs and AS prices by magnitude).
 // Heights are equal across panes — uniform stack reads better when scrubbing
-// the bitemporal slider, and short panes (<150px) lose Y-axis labels to
+// the decision-time slider, and short panes (<150px) lose Y-axis labels to
 // uPlot's tick density.
 const PANE_HEIGHT = 260;
 const PANES: PaneSpec[] = [
@@ -374,7 +374,7 @@ export function App() {
   const [toIso, setToIso] = useState<string>(urlState.toIso ?? DEFAULT_WINDOW.to);
   // decisionTime defaults to target_to ("everything published during the
   // displayed window is visible"). Slider is bounded to [from, to] so the
-  // bitemporal cursor only scrubs through what the chart is showing.
+  // decision-time cursor only scrubs through what the chart is showing.
   const [decisionIso, setDecisionIsoState] = useState<string>(
     clampToWindow(
       urlState.decisionIso ?? (urlState.toIso ?? DEFAULT_WINDOW.to),
@@ -697,7 +697,7 @@ export function App() {
         </div>
       </div>
 
-      {/* Header row 2 — decision-time slider (the bitemporal cursor) */}
+      {/* Header row 2 — decision-time slider (the decision-time cursor) */}
       <div
         className="flex items-center gap-3 px-4 py-3 border-b border-[#26262e] bg-[#14141a] text-[13px] font-mono sticky top-0 z-20"
       >

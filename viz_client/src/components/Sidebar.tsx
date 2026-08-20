@@ -63,7 +63,7 @@ export function Sidebar({
           PJM viz
         </div>
         <div className="text-[#6b6b7a] text-[11px] font-mono mt-0.5">
-          bitemporal market replay
+          market replay
         </div>
       </div>
 

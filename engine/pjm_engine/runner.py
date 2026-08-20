@@ -423,7 +423,7 @@ def run_backtest(
     rto_forecast_cache = CachedView(rto_forecasts)
 
     for event in scheduler.drain():
-        # Bitemporal view for this event. CachedView memoizes by cutoff so
+        # As-of view for this event. CachedView memoizes by cutoff so
         # adjacent events that see the same data don't re-slice.
         view_da = da_cache.at(event.timestamp)
         view_rt = rt_cache.at(event.timestamp)

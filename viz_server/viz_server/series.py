@@ -1,6 +1,6 @@
-"""Per-feed series query: bitemporal slice -> target-window filter -> resample.
+"""Per-feed series query: as-of slice -> target-window filter -> resample.
 
-This is the read path of `/api/series`. All bitemporal logic is delegated to
+This is the read path of `/api/series`. All as-of logic is delegated to
 `pjm_engine.data.CachedView`; this module only does target-window filtering,
 zone projection, and pandas resampling.
 """
@@ -149,7 +149,7 @@ def query(
     zone: str | None,
     resolution: Resolution = "auto",
 ) -> SeriesResult:
-    """Query a long-form multi-feed bitemporal slice.
+    """Query a long-form multi-feed as-of slice.
 
     Unknown feed_ids must be filtered upstream — this function raises KeyError
     for missing FeedSpecs (the API layer translates that to 400 unsupported_feed).

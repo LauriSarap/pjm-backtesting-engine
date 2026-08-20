@@ -343,7 +343,7 @@ def load_strategy_revenue(
     window: TimeWindow,
     decision_time: datetime,
 ) -> pd.DataFrame:
-    """Bitemporally honest. Returns rows where event_ts_utc <= decision_time."""
+    """No lookahead: Returns rows where event_ts_utc <= decision_time."""
     return _load_revenue_filtered(info, window, decision_time=decision_time)
 
 
@@ -353,7 +353,7 @@ def load_pf_ceiling_revenue(
 ) -> pd.DataFrame:
     """Oracle line: no decision_time clamp.
 
-    PF is solved with full foresight, so bitemporal filtering does not apply.
+    PF is solved with full foresight, so as-of filtering does not apply.
     Caller must pass an info where info.is_pf_ceiling() is True; we enforce
     it to prevent accidentally rendering a real strategy as the ceiling.
     """

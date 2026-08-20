@@ -1,4 +1,4 @@
-// Keyboard shortcuts for scrubbing the bitemporal cursor.
+// Keyboard shortcuts for scrubbing the decision-time cursor.
 //
 //   ,    step decision_time back  5 min  (1 MTU)
 //   .    step decision_time fwd   5 min

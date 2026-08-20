@@ -25,10 +25,10 @@ New to PJM? `docs/pjm-data.md` §1 explains the markets in one picture.
 
 | path | role |
 |---|---|
-| `engine/` | `pjm-engine`: simulator, events, bitemporal data layer, validators, settlement |
+| `engine/` | `pjm-engine`: simulator, events, data layer, validators, settlement |
 | `optimization/` | `pjm-optimization`: perfect-foresight MILP benchmark + forecaster plug-ins |
 | `evaluation/` | `pjm-eval`: scoring, leaderboards, HTML reports |
-| `viz_server/`, `viz_client/` | bitemporal market replay API + local React UI |
+| `viz_server/`, `viz_client/` | market replay API + local React UI |
 | `scripts/` | PJM data fetchers (Data Miner 2 / gridstatus) |
 | `docs/` | design doc and PJM data/manual references |
 
@@ -87,7 +87,7 @@ perfect-foresight ceiling from `optimization/`.
 
 ## Market replay UI
 
-`viz_server` + `viz_client` replay the bitemporal market view and strategy
+`viz_server` + `viz_client` replay the market view at any decision time and strategy
 runs interactively:
 
 ```bash

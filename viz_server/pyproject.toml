@@ -1,7 +1,7 @@
 [project]
 name = "viz-server"
 version = "0.1.0"
-description = "Bitemporal market-replay backend for the PJM viz tool. Read-only consumer of pjm-engine."
+description = "Market-replay backend for the PJM viz tool. Read-only consumer of pjm-engine."
 requires-python = ">=3.11"
 dependencies = [
     "pjm-engine",
