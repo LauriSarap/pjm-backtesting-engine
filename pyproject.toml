@@ -1,0 +1,31 @@
+[tool.uv.workspace]
+members = [
+    "engine",
+    "optimization",
+    "evaluation",
+    "viz_server",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=7",
+    "ruff>=0.6",
+    "httpx>=0.27",
+    "requests>=2.31",
+    "openpyxl>=3.1",
+]
+
+[tool.ruff]
+line-length = 100
+extend-exclude = ["viz_client"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]
+
+[tool.ruff.lint.isort]
+known-first-party = [
+    "pjm_engine",
+    "pjm_eval",
+    "pjm_optimization",
+    "viz_server",
+]

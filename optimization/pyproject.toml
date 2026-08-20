@@ -1,0 +1,29 @@
+[project]
+name = "pjm-optimization"
+version = "0.1.0"
+description = "Perfect-foresight + rolling-horizon MILP solvers for the PJM BESS engine."
+authors = [{ name = "Lauri Sarap" }]
+requires-python = ">=3.11"
+dependencies = [
+    "pjm-engine",
+    "ortools>=9.10",
+    "pandas>=2.0",
+    "pyarrow>=14.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["pjm_optimization*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.uv.sources]
+pjm-engine = { workspace = true }

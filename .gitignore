@@ -1,0 +1,20 @@
+data/
+evaluation/runs/
+
+# python
+__pycache__/
+*.pyc
+*.egg-info/
+.venv/
+.pytest_cache/
+.ruff_cache/
+dist/
+build/
+
+# node
+node_modules/
+viz_client/dist/
+
+# local
+.env
+.DS_Store

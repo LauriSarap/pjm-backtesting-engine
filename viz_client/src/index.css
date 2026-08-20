@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --bg: #0a0a0c;
+    --surface: #14141a;
+    --border: #26262e;
+    --text: #e6e6e8;
+    --muted: #6b6b7a;
+    --accent: #fbbf24;
+  }
+
+  html, body, #root {
+    margin: 0;
+    height: 100vh;
+    width: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+  }
+
+  body {
+    min-width: 1280px;
+  }
+}
+
+/* uPlot dark theme overrides. The shipped CSS is light-mode by default. */
+.uplot {
+  background: var(--surface);
+  color: var(--text);
+}
+.uplot, .uplot * {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* Live legend / cursor readout. Sized for hours of investigation — large,
+ * mono, color-blocked. Renders below the canvas. */
+.u-legend {
+  color: var(--text);
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 10px 14px;
+  font-size: 14px;
+}
+.u-legend tr {
+  line-height: 1.7;
+}
+.u-legend th {
+  color: var(--muted);
+  font-weight: 500;
+  padding-right: 10px;
+  text-align: left;
+}
+.u-legend td, .u-legend .u-value {
+  color: var(--text);
+  font-weight: 600;
+  padding-right: 24px;
+  font-variant-numeric: tabular-nums;
+}
+.u-legend .u-marker {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  margin-right: 6px;
+  vertical-align: -2px;
+}
+/* The "off" state when the cursor leaves the canvas — keep the layout but
+ * gray the values so it's clear they're not live. */
+.u-legend .u-off > * {
+  opacity: 0.5;
+}
+
+/* Crosshair lines and selection rectangle in our amber accent. */
+.u-cursor-x, .u-cursor-y {
+  border-color: var(--accent);
+}
+.u-select {
+  background: rgba(251, 191, 36, 0.08);
+  border: 1px solid var(--accent);
+}
+.u-tooltip {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+}

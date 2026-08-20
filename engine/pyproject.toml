@@ -1,0 +1,24 @@
+[project]
+name = "pjm-engine"
+version = "0.1.0"
+description = "PJM market-mechanics backtesting engine for BESS"
+authors = [{ name = "Lauri Sarap" }]
+requires-python = ">=3.11"
+dependencies = [
+    "pandas>=2.0",
+    "pyarrow>=14",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["pjm_engine*"]
+
+[tool.setuptools.package-data]
+pjm_engine = ["py.typed"]

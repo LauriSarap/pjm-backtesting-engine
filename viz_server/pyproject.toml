@@ -1,0 +1,26 @@
+[project]
+name = "viz-server"
+version = "0.1.0"
+description = "Bitemporal market-replay backend for the PJM viz tool. Read-only consumer of pjm-engine."
+requires-python = ">=3.11"
+dependencies = [
+    "pjm-engine",
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.27",
+    "pyarrow>=14",
+    "pandas>=2.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7", "httpx>=0.27"]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["viz_server*"]
+
+[tool.uv.sources]
+pjm-engine = { workspace = true }
